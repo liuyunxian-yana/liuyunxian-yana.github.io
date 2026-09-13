@@ -13,9 +13,9 @@ title                    : "刘韫娴的个人主页"
 title_separator          : "-"
 name                     : &name "刘韫娴"
 description              : &description "新疆大学软件学院软件工程专业学生   研究方向包括多模态学习、单细胞聚类、对比学习"
-url                      : https://liuyunxian1026.github.io/github.io/
+url                      : https://liuyunxian-yana.github.io
 baseurl                  : "" 
-repository               : "liuyunxian1026/liuyunxian1026.github.io"
+repository               : "liuyunxian-yana/liuyunxian-yana.github.io"
 
 # Site Author - The following control what appear as part of the author content on the side bar.
 #               If a field is blank the icon and link will not appear, otherwise it will be shown.
