@@ -28,11 +28,18 @@ redirect_from:
 <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 1rem;">
   <span style="text-align: left;"><strong>快手 ｜ 可灵</strong></span>
   <span style="text-align: center;">策略应用算法实习生</span>
-  <span style="text-align: right; white-space: nowrap;">2025年11月 – 2026年3月</span>
+  <span style="text-align: right; white-space: nowrap;">2025年10月 – 2026年4月</span>
 </div>
 
-- **生成式推荐：** 参与生成式推荐方向的算法探索，围绕用户行为与内容信息开展数据构建、模型训练和效果评估。
-- **推荐系统建设：** 参与可灵平台推荐系统的搭建，负责部分推荐链路搭建及相关功能落地。
+- **生成式推荐｜KlingGR：** 面向可灵社区生产、消费与搜索等用户行为，基于已有 **Semantic ID** 体系搭建生成式推荐链路，使LLM根据用户历史行为直接生成下一步可能交互的内容 SID，完成数据构建、多阶段训练、偏好对齐与推理评测，并推进至上线准备阶段。
+  - **数据与任务构建：** 基于30天用户行为数据关联已发布内容的SID、标题、类别及Caption，构建 **Itemic Alignment、Sequential Preference Modeling、Interleaved User Persona Grounding、Itemic Dense Captioning** 等多任务训练数据；针对行为序列完成去重、长度截断及按用户/时间的 Train-Val-Test 划分，避免未来行为泄漏。
+  - **分阶段训练：** 设计 **Alignment → Multi-task SFT → DPO** 训练流程：首先学习SID与内容语义的映射关系，再融合用户历史序列、用户画像与内容描述学习Next-SID Prediction；采用LoRA进行多任务微调，并围绕长序列Token数、Batch Size、Gradient Accumulation及Tokenize Cache优化训练效率。
+  - **偏好对齐与推理：** 基于SFT模型生成候选 SID，按照 SID 层级前缀匹配构造 **Easy / Medium / Hard** 负样本，并结合真实曝光未交互样本构建 **SP-DPO / RF-DPO** 偏好数据；实现**Beam Search推理与Trie约束解码**，经DPO优化后，**Top-1 合法已发布 SID 占比由 73% 提升至 91%，Top-5 由 83% 提升至 99%**。
+
+- **推荐系统建设：** 负责可灵社区线上推荐服务与召回链路开发，基于 **DAG 推荐框架**接入多路召回及策略节点，覆盖候选生成、融合、去重、预排、排序及重排等环节，相关能力持续上线支撑 Web / App 推荐业务快速迭代。
+  - **召回与排序链路：** 开发并维护多路召回节点，接入用户 Embedding / KNN、作者及内容等召回能力，候选结果依次经过 **Merge、Dedup、Bloom Filter、Pre-rank、Rank、Boost、Rerank** 等处理节点，并完成线上调试与发布。
+  - **流量编排：** 设计 **PIN → 精选优选 → 冷启动 → 潜力作者 → 常规推荐** 的多内容池优先级与 Merge 策略，根据页面、内容类型及用户场景配置候选数量、固定/随机插入槽位及兜底逻辑，实现不同来源内容的统一流量分配。
+  - **工程落地：** 结合Kconf配置内容池与插入槽位，通过ES获取冷启动、潜力作者等候选，并使用Redis读取用户Embedding等在线特征，通过DAG节点化机制接入新召回及策略能力，支撑高频业务需求上线与推荐策略迭代。
 
 ---
 
